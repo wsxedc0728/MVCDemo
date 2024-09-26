@@ -6,16 +6,18 @@ namespace MVCDemo.Controllers
 {
     public class 課程管理Controller : Controller
     {
-        private ContosoUniversityContext db;
+        private ICourseRepository repo;
 
-        public 課程管理Controller(ContosoUniversityContext db)
+        public 課程管理Controller(ICourseRepository repo, IUnitOfWork uow)
         {
-            this.db = db;
+            this.repo = repo;
+            this.repo.UnitOfWork = uow;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            return View(await db.Courses.Select(d => new CourseList
+
+            var data = await repo.FindAll().Select(d => new CourseList
             {
                 CourseId = d.CourseId,
                 Title = d.Title,
@@ -23,7 +25,9 @@ namespace MVCDemo.Controllers
                 Description = d.Description,
                 Slug = d.Slug,
                 StartDate = d.StartDate
-            }).ToListAsync());
+            }).ToListAsync();
+
+            return View(data);
         }
 
         public ActionResult Create()
@@ -36,12 +40,12 @@ namespace MVCDemo.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Courses.Add(new Course
+                repo.Add(new Course
                 {
                     Title = data.Title,
                     Credits = data.Credits
                 });
-                db.SaveChanges();
+                repo.UnitOfWork.Commit();
 
                 return RedirectToAction("Index");
             }
@@ -56,9 +60,7 @@ namespace MVCDemo.Controllers
                 return NotFound();
             }
 
-            var course = await db.Courses
-                .Include(c => c.Department)
-                .FirstOrDefaultAsync(m => m.CourseId == id);
+            var course = await repo.FindOneJoinDepartment(id.Value);
             if (course == null)
             {
                 return NotFound();
