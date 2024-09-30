@@ -7,11 +7,14 @@ namespace MVCDemo.Controllers
     public class 課程管理Controller : Controller
     {
         private ICourseRepository repo;
+        private readonly ILogger<課程管理Controller> logger;
 
-        public 課程管理Controller(ICourseRepository repo, IUnitOfWork uow)
+        public 課程管理Controller(ICourseRepository repo, IUnitOfWork uow, ILogger<課程管理Controller> logger)
         {
             this.repo = repo;
             this.repo.UnitOfWork = uow;
+            this.logger = logger;
+
         }
 
         public async Task<IActionResult> IndexAsync()

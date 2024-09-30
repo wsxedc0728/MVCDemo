@@ -3,6 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+// 註冊此 Attribute 將導致 InvalidOperationException
 builder.Services.AddScoped<判斷是否有重複的課程名稱Attribute>();
 
 builder.Services.AddScoped<IUnitOfWork, EFUnitOfWork>();
