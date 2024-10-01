@@ -9,11 +9,11 @@ using MVCDemo.Models;
 
 namespace MVCDemo.Controllers
 {
-    public class 學員管理Controller : Controller
+    public class 人員管理Controller : Controller
     {
         private readonly ContosoUniversityContext _context;
 
-        public 學員管理Controller(ContosoUniversityContext context)
+        public 人員管理Controller(ContosoUniversityContext context)
         {
             _context = context;
         }
@@ -47,6 +47,8 @@ namespace MVCDemo.Controllers
                           EnrollmentDate = person.EnrollmentDate,
                           Discriminator = person.Discriminator
                       }).ToListAsync();
+
+            var name = User.Identity?.Name;
 
             return View(data);
         }
