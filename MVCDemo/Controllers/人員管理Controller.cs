@@ -82,7 +82,7 @@ namespace MVCDemo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LastName,FirstName,HireDate,EnrollmentDate,Discriminator")] Person person)
+        public async Task<IActionResult> Create([Bind("Id,LastName,FirstName,HireDate,EnrollmentDate,Discriminator")] PersonList person)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +114,7 @@ namespace MVCDemo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,LastName,FirstName,HireDate,EnrollmentDate,Discriminator")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,LastName,FirstName,HireDate,EnrollmentDate,Discriminator")] PersonList person)
         {
             if (id != person.Id)
             {

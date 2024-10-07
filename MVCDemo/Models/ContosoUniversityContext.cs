@@ -23,6 +23,8 @@ public partial class ContosoUniversityContext : DbContext
 
     public virtual DbSet<Person> People { get; set; }
 
+    public virtual DbSet<User> Users { get; set; }
+
     public virtual DbSet<VwCourseStudent> VwCourseStudents { get; set; }
 
     public virtual DbSet<VwCourseStudentCount> VwCourseStudentCounts { get; set; }
@@ -144,6 +146,24 @@ public partial class ContosoUniversityContext : DbContext
                 .HasMaxLength(50);
             entity.Property(e => e.HireDate).HasColumnType("datetime");
             entity.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4C6CEDA430");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(100);
+            entity.Property(e => e.PasswordHash)
+                .IsRequired()
+                .HasMaxLength(256);
+            entity.Property(e => e.Username)
                 .IsRequired()
                 .HasMaxLength(50);
         });

@@ -26,5 +26,5 @@ public partial class CourseCopy
 
     public virtual ICollection<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
 
-    public virtual ICollection<Person> Instructors { get; set; } = new List<Person>();
+    public virtual ICollection<PersonList> Instructors { get; set; } = new List<PersonList>();
 }
